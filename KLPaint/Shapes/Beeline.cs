@@ -7,14 +7,26 @@ using System.Threading.Tasks;
 
 namespace KLPaint.Shapes
 {
+    [Serializable]
     /// <summary>
     /// 直线
     /// </summary>
     public class Beeline : Shape
     {
-        public override void Draw(Graphics graphics)
+        public Beeline(Point startPoint) : base(startPoint)
         {
-            throw new NotImplementedException();
+        }
+        
+
+        public Beeline(Shape shape) : base(shape)
+        {
+        }
+
+        public override void Draw(Graphics graphic,Point offset=default(Point))
+        {
+            Pen pen = GetPen();
+
+            graphic.DrawLine(pen, startPoint, EndPoint);
         }
     }
 }
