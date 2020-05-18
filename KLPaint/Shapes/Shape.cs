@@ -71,7 +71,6 @@ namespace KLPaint.Shapes
             IsDash = shape.IsFill;
         }
 
-        
         public abstract void Draw(Graphics graphics,Point offset= default(Point));
         
     }
@@ -90,12 +89,22 @@ namespace KLPaint.Shapes
         }
     }
 
+    public class ShapeClassAttribute : Attribute
+    {
+        public Type type { get; set; }
+    }
+
     public enum SupportShape
     {
+        [ShapeClass(type =typeof(Brush))]
         brushes,
+        [ShapeClass(type = typeof(Polygon))]
         pen,
+        [ShapeClass(type = typeof(Beeline))]
         line,
+        [ShapeClass(type = typeof(Rectangle))]
         rectang,
+        [ShapeClass(type = typeof(Ellipse))]
         ellipse
     }
 }

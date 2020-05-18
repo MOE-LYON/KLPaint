@@ -75,6 +75,7 @@ namespace KLPaint
             {
                 FrontColor = frontColor,
                 PenWidth = penWidth,
+                BackColor = backColor,
                 IsFill = draw_isfill.Checked,
                 IsDash = new Random().Next(2) > 1
             };
@@ -257,12 +258,44 @@ namespace KLPaint
         {
             this.penWidth = float.Parse(pen_width.SelectedItem.ToString());
         }
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (FileDialog fileDialog = new OpenFileDialog())
+                {
+                    fileDialog.Filter = "KLPint resource |*.klp";
+                    if (fileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        shapes = Fileutil.read<LinkedList<Shape>>(fileDialog.FileName);
+                        cache_bmp = null;
+                        drawingBoard.Invalidate();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
 
+            }
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (FileDialog fileDialog = new SaveFileDialog())
+            {
+                fileDialog.Filter = "KLPint resource |*.klp";
+                if (fileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    Fileutil.Write(shapes, fileDialog.FileName);
+                }
+            }
+        }
         #endregion
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Fileutil.Write(shapes);
         }
+        
     }
 }

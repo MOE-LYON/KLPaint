@@ -11,9 +11,9 @@ namespace KLPaint.Utils
 {
     public static class Fileutil
     {
-        public static void Write<T>(T obj)
+        public static void Write<T>(T obj,String file= "data.klp")
         {
-            using(FileStream fs = new FileStream("data.klp", FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            using(FileStream fs = new FileStream(file, FileMode.OpenOrCreate, FileAccess.ReadWrite))
             {
                     BinaryFormatter formatter = new BinaryFormatter();
                     formatter.Serialize(fs, obj);
@@ -25,7 +25,7 @@ namespace KLPaint.Utils
         public static T read<T>(String file)where T:class
         {
 
-            using (FileStream fs = new FileStream("data.klp", FileMode.Open, FileAccess.Read))
+            using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read))
             {
                 BinaryFormatter formatter = new BinaryFormatter();
                 T data = (T)formatter.Deserialize(fs);
